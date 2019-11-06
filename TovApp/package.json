@@ -1,0 +1,10 @@
+{
+  "name": "TovApp",
+  "version": "1.0.0",
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "node_module": "0.0.0"
+  }
+}

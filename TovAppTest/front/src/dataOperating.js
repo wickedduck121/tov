@@ -15,11 +15,13 @@ var Main = {
       rows.splice(index,1);
       rows.push(element);
     },
-    //метод выделения строки, также хотел добавить получение информации из строки в 3 поля ввода, но не получилось
-    //нашел только, как записать сообщение по ссылке
+    //метод выделения строки, также добавил получение информации из строки в 3 поля ввода,
+    // консоль ругается на прямое присвоение
     changeRow(row){
       this.$refs.tab.setCurrentRow(row);
-      //this.$refs.ID.value=this.$refs.tab.$data.id;
+     this.$refs.ID.value=row.id;
+      this.$refs.name.value=row.name;
+      this.$refs.price.value=row.price;
     }
   },
   data() {

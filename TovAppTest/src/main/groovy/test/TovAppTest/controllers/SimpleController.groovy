@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.util.BeanUtil
 import groovy.transform.CompileStatic
 import org.springframework.web.bind.annotation.PutMapping
 import test.TovAppTest.entities.Product
-import test.TovAppTest.entities.SimpleEntity
-import test.TovAppTest.rep.SimpleRepos
+import test.TovAppTest.rep.ProductRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,40 +18,40 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("message")
 class SimpleController {
 
-    private final SimpleRepos repo;
+    private final ProductRepository repo;
 
     @Autowired
-    public SimpleController(SimpleRepos rp){
+    public SimpleController(ProductRepository rp){
         repo=rp;
     }
 
     @GetMapping
-    public List<SimpleEntity> list(){
+    public List<Product> list(){
         repo.findAll()
     }
 
     @GetMapping("{id}")
-    public SimpleEntity getOne(@PathVariable("id") SimpleEntity element)
+    public Product getOne(@PathVariable("id") Product element)
     {
         element
     }
 
     @PutMapping("{id}")
-    public SimpleEntity update(
-            @PathVariable("id") SimpleEntity elementDB,
-            @RequestBody SimpleEntity element
+    public Product update(
+            @PathVariable("id") Product elementDB,
+            @RequestBody Product element
     ){
         BeanUtils.copyProperties(element,elementDB, "id");
         elementDB
     }
 
     @PostMapping
-    public SimpleEntity add(@RequestBody SimpleEntity element){
+    public Product add(@RequestBody Product element){
         repo.save(element)
     }
 
     @DeleteMapping("{id}")
-    public void del(@PathVariable("id") SimpleEntity element){
+    public void del(@PathVariable("id") Product element){
         repo.delete(element)
     }
 }

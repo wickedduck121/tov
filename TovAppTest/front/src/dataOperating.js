@@ -1,20 +1,25 @@
-var Main1 = {
-  data () {
-    return {
-      radio: '1'
-    };
-  }
-};
-var Ctor1 = Vue.extend(Main1);
-new Ctor1().$mount('#app');
-
-
-
 var Main = {
   methods:{
+    //нажание основной кнопки
     Click(rows, id_local, name_local, price_local) {
-      var element={id:id_local,name:name_local,price:price_local}
+      var element={id:id_local,name:name_local,price:price_local};
       rows.push(element);
+    },
+    //нажатие кнопки удаления
+    deleteClick(rows, index){
+      rows.splice(index,1);
+    },
+    //кнопка редактирования получает информацию из приведённых 3х полей на странице и закидывает в конец списка
+    editClick(rows, index, id_local, name_local, price_local){
+      var element={id:id_local,name:name_local,price:price_local};
+      rows.splice(index,1);
+      rows.push(element);
+    },
+    //метод выделения строки, также хотел добавить получение информации из строки в 3 поля ввода, но не получилось
+    //нашел только, как записать сообщение по ссылке
+    changeRow(row){
+      this.$refs.tab.setCurrentRow(row);
+      //this.$refs.ID.value=this.$refs.tab.$data.id;
     }
   },
   data() {

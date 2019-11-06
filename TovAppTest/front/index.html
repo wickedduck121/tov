@@ -9,30 +9,31 @@
 <body>
 <script src="//unpkg.com/vue/dist/vue.js"></script>
 <script src="//unpkg.com/element-ui@2.0.11/lib/index.js"></script>
-<div id="app">
-  <template>
-    <el-radio v-model="radio" label="1">Option A</el-radio>
-    <el-radio v-model="radio" label="2">Option B</el-radio>
-  </template>
-
-</div>
 
 <script src="//unpkg.com/vue/dist/vue.js"></script>
 <script src="//unpkg.com/element-ui@2.0.11/lib/index.js"></script>
 <div id="table">
-  <el-input id="one" placeholder="ID" v-model="input1"></el-input>
+  <el-input id="one" placeholder="ID" v-model="input1" ref="ID"></el-input>
   <el-input id="two" placeholder="Name" v-model="input2"></el-input>
   <el-input id="three" placeholder="Price" v-model="input3"></el-input>
-  <el-button @click.native.prevent="Click(tableData, input1, input2, input3)" type="text" size="small">Add</el-button>
+  <el-button @click.native.prevent="Click(tableData, input1, input2, input3)" type="primary">Add</el-button>
 
   <template>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" ref="tab" highlight-current-row @current-change="changeRow">
       <el-table-column prop="id" label="ID" width="180">
       </el-table-column>
       <el-table-column prop="name" label="Name" width="180">
       </el-table-column>
       <el-table-column prop="price" label="Price">
       </el-table-column>
+      <el-table-column fixed="right" label="Operations" width="120">
+
+        <template slot-scope="scope">
+          <el-button @click="deleteClick(tableData, scope.$index)" type="text" size="small">Delete</el-button>
+          <el-button @click="editClick(tableData, scope.$index, input1, input2, input3)" type="text" size="small">Edit</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
   </template>
 </div>

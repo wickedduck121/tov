@@ -19,3 +19,7 @@
   display: inline-block;
   width:300px;
 }
+
+.el-table .succes{
+  background: #42b983;
+}

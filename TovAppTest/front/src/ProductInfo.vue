@@ -14,7 +14,7 @@
       <el-table-column fixed="right" label="Operations" width="120">
 
         <template slot-scope="scope">
-          <el-button @click="deleteClick(tableData, scope.$index)" type="text" size="small">Delete</el-button>
+          <el-button @click="deleteClick(tableData, scope.$index, scope.row)" type="text" size="small">Delete</el-button>
           <el-button @click="editClick(tableData, scope.$index, input1, input2, input3)" type="text" size="small">Edit</el-button>
         </template>
       </el-table-column>
@@ -35,9 +35,11 @@
                 rows.push(element);
             },
             //нажатие кнопки удаления
-            deleteClick(rows, index){
+            deleteClick(rows, index, row){
+
+                deleteProduct(row.id);
                 rows.splice(index,1);
-                deleteProduct(index);
+
             },
             //кнопка редактирования получает информацию из приведённых 3х полей на странице и закидывает в конец списка
             editClick(rows, index, id_local, name_local, price_local){

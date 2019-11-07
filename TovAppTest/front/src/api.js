@@ -8,6 +8,7 @@ export function addProduct(name, price) {
   return axios.post('/api/products', { name, price })
 }
 
-export function deleteProduct(id) {
-  return axios.delete('/api/products', { headers: {id} })
+export function deleteProduct(id_local) {
+
+  return axios.delete('/api/products', {data: {id: id_local} });
 }

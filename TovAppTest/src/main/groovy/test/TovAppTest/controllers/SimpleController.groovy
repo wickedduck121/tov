@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("message")
-class SimpleController {
+@RequestMapping("/api/products")
+class ProductController {
 
     private final ProductRepository repo;
 
     @Autowired
-    public SimpleController(ProductRepository rp){
+    public ProductController(ProductRepository rp){
         repo=rp;
     }
 

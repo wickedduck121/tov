@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <product-info />
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
@@ -20,9 +21,13 @@
 </template>
 
 <script>
+import TestModule from "./test-module";
+import ProductInfo from "./ProductInfo";
+
 export default {
   name: 'app',
-  data () {
+    components: {ProductInfo, TestModule},
+    data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }

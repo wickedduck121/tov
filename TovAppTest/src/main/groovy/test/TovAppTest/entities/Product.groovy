@@ -1,12 +1,11 @@
 package test.TovAppTest.entities
 
-
-import lombok.ToString
+import groovy.transform.ToString
 
 import javax.persistence.*
 
 @Entity
-@ToString(includeFieldNames = true)
+@ToString(includeNames = true)
 @Table(name = 'products')
 class Product {
 

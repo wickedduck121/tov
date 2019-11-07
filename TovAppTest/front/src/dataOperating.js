@@ -1,3 +1,5 @@
+//var productApi = Vue.resource();
+
 var Main = {
   methods:{
     //нажание основной кнопки
@@ -24,6 +26,17 @@ var Main = {
       this.$refs.price.value=row.price;
     }
   },
+  created:
+  function () {
+    var instance = this;
+    instance.$http.get('localhost:8080/message{/id}').then(result =>
+      result.json().then(data =>
+        data.forEach(dat => this.tableData.push(dat))
+    //this.$http.get('/localhost:8080/message{/id}')
+      )
+    )
+  }
+  ,
   data() {
     return {
       tableData: [{
@@ -51,3 +64,7 @@ var Main = {
 };
 var Ctor3 = Vue.extend(Main);
 new Ctor3().$mount('#table');
+
+
+
+

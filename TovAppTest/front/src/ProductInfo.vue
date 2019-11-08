@@ -15,7 +15,7 @@
 
         <template slot-scope="scope">
           <el-button @click="deleteClick(tableData, scope.$index, scope.row)" type="text" size="small">Delete</el-button>
-          <el-button @click="editClick(tableData, scope.$index, input1, input2, input3)" type="text" size="small">Edit</el-button>
+          <el-button @click="editClick(tableData, scope.$index, scope.row, input2, input3)" type="text" size="small">Edit</el-button>
         </template>
       </el-table-column>
 
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import { allProduct, addProduct, deleteProduct } from './api.js';
+    import { allProduct, addProduct, deleteProduct, updateProduct } from './api.js';
     export default {
         name: "ProductInfo",
         methods:{
@@ -36,14 +36,19 @@
             },
             //нажатие кнопки удаления
             deleteClick(rows, index, row){
+               var ind=index+1;
 
                 deleteProduct(row.id);
-                rows.splice(index,1);
+                alert(index);
+                rows.splice(row.index,1);
 
             },
             //кнопка редактирования получает информацию из приведённых 3х полей на странице и закидывает в конец списка
-            editClick(rows, index, id_local, name_local, price_local){
-                var element={id:id_local,name:name_local,price:price_local};
+            editClick(rows, index, row, name_local, price_local){
+                var element={id:row.id,name:name_local,price:price_local};
+
+                updateProduct(row.id, element).then(response => {console.log(response)});
+
                 rows.splice(index,1);
                 rows.push(element);
             },

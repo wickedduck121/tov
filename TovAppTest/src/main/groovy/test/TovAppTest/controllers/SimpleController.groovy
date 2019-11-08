@@ -2,6 +2,8 @@ package test.TovAppTest.controllers
 
 import com.fasterxml.jackson.databind.util.BeanUtil
 import groovy.transform.CompileStatic
+import org.springframework.beans.BeanUtils
+import org.springframework.boot.jackson.JsonObjectDeserializer
 import org.springframework.web.bind.annotation.PutMapping
 import test.TovAppTest.entities.Product
 import test.TovAppTest.rep.ProductRepository
@@ -41,8 +43,14 @@ class ProductController {
             @PathVariable("id") Product elementDB,
             @RequestBody Product element
     ){
-        BeanUtils.copyProperties(element,elementDB, "id");
-        elementDB
+        //repo.setProductById(element.name,element.price,element.id);
+        elementDB.name=element.name
+        elementDB.price=element.price
+      //  elementDB.id=element.id
+        repo.save(elementDB)
+        def row = repo.getOne(element.id)
+        //BeanUtils.copyProperties(element,elementDB, 'id');
+        row
     }
 
     @PostMapping

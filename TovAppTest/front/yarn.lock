@@ -6016,6 +6016,11 @@ vue-axios@^2.1.5:
   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-2.1.5.tgz#1af4bf1218ed71309c76afb38d0f683e312c24a7"
   integrity sha512-th5xVbInVoyIoe+qY+9GCflEVezxAvztD4xpFF39SRQYqpoKD2qkmX8yv08jJG9a2SgNOCjirjJGSwg/wTrbmA==
 
+vue-google-oauth@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vue-google-oauth/-/vue-google-oauth-1.0.5.tgz#35e0861eb8abb342c08102c24658f1e05d78c386"
+  integrity sha1-NeCGHrirs0LAgQLCRljx4F14w4Y=
+
 vue-hot-reload-api@^2.2.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"

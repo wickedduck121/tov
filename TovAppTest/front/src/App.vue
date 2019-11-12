@@ -1,23 +1,34 @@
 <template>
   <div id="app">
+    <transition name="el-fade-in-linear">
+    <div v-show="show1">
     <product-info />
     <google-auth name="mag_auth" />
+    </div>
+    </transition>
+    <register />
+    <Login />
   </div>
+
 </template>
 
 <script>
 import TestModule from "./test-module";
 import ProductInfo from "./ProductInfo";
 import GoogleAuth from "./GoogleAuth";
-
+import Register from "./Register/Register";
+import Login from "./Login"
+import Reg from './Registration.vue';
+import Vue from 'vue';
 export default {
   name: 'app',
-    components: {GoogleAuth, ProductInfo, TestModule},
+    components: {Register, GoogleAuth, ProductInfo, TestModule, Login},
     data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+        show1: true
     }
-  }
+  },
 }
 </script>
 

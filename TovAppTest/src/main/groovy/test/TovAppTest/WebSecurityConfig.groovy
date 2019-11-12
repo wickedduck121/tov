@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         Logger log = Logger.getLogger(TovAppTestApplication.class.name)
@@ -26,11 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/", "/api/login").permitAll()
+                .anyRequest().permitAll()
 
                 http.formLogin()
-                .loginPage("/api/login")
+                .loginPage("/api/login").loginProcessingUrl('/api/login')
                 .permitAll()
                 .and()
                 .logout()
@@ -39,35 +40,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Configuration
-    protected static class AuthenticationConfiguration extends
-            GlobalAuthenticationConfigurerAdapter {
-
-
-        @Autowired
-        void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(MyUserDetailService).passwordEncoder(bCryptPasswordEncoder());
-        }
-
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            auth
-                    .inMemoryAuthentication()
-                    .withUser("user").password("password").roles("USER");
-        }
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
     }
 
+//    @Configuration
+//    protected static class AuthenticationConfiguration extends
+//            GlobalAuthenticationConfigurerAdapter {
+//
+//
+//        @Autowired
+//        void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//            auth.userDetailsService(MyUserDetailService).passwordEncoder(bCryptPasswordEncoder());
+//        }
+//
+//        @Override
+//        public void init(AuthenticationManagerBuilder auth) throws Exception {
+//            auth
+//                    .inMemoryAuthentication()
+//                    .withUser("user").password("password").roles("USER");
+//        }
+//
+//    }
+
     @Bean
-    UserDetailsService userDetailsService()
-    {
+    UserDetailsService userDetailsService() {
         Logger log = Logger.getLogger(TovAppTestApplication.class.name)
         log.info("bean got")
         return new MyUserDetailService();
     }
     /*@Autowired
     private MyUserDetailService userDetailsService;*/
-    }
+}
 
 
 

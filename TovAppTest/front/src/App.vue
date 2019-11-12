@@ -1,14 +1,13 @@
 <template>
   <div id="app">
-    <transition name="el-fade-in-linear">
     <div v-show="show1">
     <product-info />
-    <google-auth name="mag_auth" />
     </div>
-    </transition>
-    <register />
     <Login />
+
   </div>
+
+
 
 </template>
 
@@ -18,11 +17,13 @@ import ProductInfo from "./ProductInfo";
 import GoogleAuth from "./GoogleAuth";
 import Register from "./Register/Register";
 import Login from "./Login"
+import Map from "./Map"
+import GooglePlaces from "./googlePlaces"
 import Reg from './Registration.vue';
 import Vue from 'vue';
 export default {
   name: 'app',
-    components: {Register, GoogleAuth, ProductInfo, TestModule, Login},
+    components: {Register, GoogleAuth, ProductInfo, TestModule, Login, Map,GooglePlaces},
     data () {
     return {
       msg: 'Welcome to Your Vue.js App',

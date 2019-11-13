@@ -6,21 +6,18 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import GoogleAuth from 'vue-google-oauth'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE',
-    libraries: 'places',
+    libraries: 'places,drawing,geocoder'
   },
 });
-Vue.use(VueGoogleAutocomplete, {key:'AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE'});
 
 Vue.use(ElementUi);
 Vue.use(GoogleAuth, { client_id: '119838100754-v0klbsjrnas8efa4gqkjds4soa1t5t41.apps.googleusercontent.com' });
 Vue.googleAuth().load();
-//Vue.prototype.$http = Axios;
 
 new Vue({
   el:'#app',

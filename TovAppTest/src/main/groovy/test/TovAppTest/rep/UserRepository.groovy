@@ -5,5 +5,5 @@ import test.TovAppTest.entities.User
 
 interface UserRepository extends JpaRepository<User, String> {
     User findByEmail(String email);
-    User findByName(String name);
+    Optional<User> findByName(String name);
 }

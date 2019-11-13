@@ -1,6 +1,17 @@
 <template>
-  <GmapMap
-    :center="{lat:10, lng:10}"
+  <div>
+    <div>
+      <h2>Search and add a pin</h2>
+      <label>
+        <gmap-autocomplete v-bind:types="tps"  style="width: 50%" v-bind:componentRestrictions="cr"
+          @place_changed="setPlace">
+        </gmap-autocomplete>
+        <button @click="addMarker">Add</button>
+      </label>
+      <br/>
+
+    </div>
+  <GmapMap v-bind:center="jn"
     :zoom="7"
     map-type-id="terrain"
     style="width: 95%; height: 300px"
@@ -8,27 +19,35 @@
     <gmap-info-window :options="infoOptions" :position="infoPosition" :opened="infoOpened" @closeclick="infoOpened=false">
       {{infoContent}}
     </gmap-info-window>
-    <gmap-marker v-for="(item, key) in coordinates" :key="key" :position="getPosition(item)" :clickable="true" @click="toggleInfo(item, key)" />
+    <gmap-marker v-for="(item, key) in markers" :key="key" :position="item.position" :clickable="true" @click="toggleInfo(item, key)" />
 
   </GmapMap>
+  </div>
 </template>
 
 <script>
+    import {gmapApi} from 'vue2-google-maps';
+    import geoCoder from 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE'
+
     export default {
+        computed: {
+            google: gmapApi},
+
+        name: "Map",
+
         data() {
             return {
-                coordinates: {
-                    0: {
-                        full_name: 'Erich  Kunze',
-                        lat: '10.31',
-                        lng: '123.89'
-                    },
-                    1: {
-                        full_name: 'Delmer Olson',
-                        lat: '10.32',
-                        lng: '123.89'
-                    }
+                cr:{
+                    country:'de'
                 },
+                bns:[
+                    {lat: 50,lng: 30},
+                    {lat:45, lng:25}
+                ],
+                tps:['establishment'],
+                jn:{lat:10, lng:10},
+                places: [],
+                markers: [],
                 infoPosition: null,
                 infoContent: null,
                 infoOpened: false,
@@ -37,26 +56,71 @@
                     pixelOffset: {
                         width: 0,
                         height: -35
-                    }
+                    },
+                    currentPlace: null
                 },
 
 
             }
         },
+        mounted(){
+            this.geolocate();
+        },
         methods:{
-            getPosition: function(marker) {
-                return {
-                    lat: parseFloat(marker.lat),
-                    lng: parseFloat(marker.lng)
+            setPlace(place) {
+                this.currentPlace = place;
+            },
+            addMarker() {
+                if (this.currentPlace) {
+                    const marker = {
+                        lat: this.currentPlace.geometry.location.lat(),
+                        lng: this.currentPlace.geometry.location.lng()
+                    };
+                    this.markers.push({ position: marker, full_name: this.currentPlace.name });
+                    this.places.push(this.currentPlace);
+                    this.center = marker;
+                    this.currentPlace = null;
+                    this.jn=marker;
                 }
             },
+            geolocate: function() {
+                let geocoder = new geoCoder.GeoCoder();
+                navigator.geolocation.getCurrentPosition(position => {
+                    geocoder.geocode({'latLng':{latitude: position.coords.latitude, longitude: position.coords.longitude}},function(results, status) {
+                        if (status === this.google.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                this.cr = getCountry(results);
+                            }
+                        }
+                    });
+                    this.jn = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                });
+                function getCountry(results) {
+                    for (var i = 0; i < results[0].address_components.length; i++)
+                    {
+                        var shortname = results[0].address_components[i].short_name;
+                        var longname = results[0].address_components[i].long_name;
+                        var type = results[0].address_components[i].types;
+                        if (type.indexOf("country") !== -1)
+                        {
+                                return shortname;
+                        }
+                    }
+
+                }
+
+
+            },
             toggleInfo: function(marker, key) {
-                this.infoPosition = this.getPosition(marker)
-                this.infoContent = marker.full_name
-                if (this.infoCurrentKey == key) {
+                this.infoPosition = marker.position;
+                this.infoContent = marker.full_name;
+                if (this.infoCurrentKey === key) {
                     this.infoOpened = !this.infoOpened
                 } else {
-                    this.infoOpened = true
+                    this.infoOpened = true;
                     this.infoCurrentKey = key
                 }
             }

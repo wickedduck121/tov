@@ -9,15 +9,15 @@
 </template>
 
 <script>
-    import VueGoogleAutocomplete from 'vue-google-autocomplete'
+    import * as VueGoogleMaps from 'vue2-google-maps'
     export default {
         name: "googlePlaces",
         mounted() {
-            this.autocomplete = new VueGoogleAutocomplete.Autocomplete(
-                (this.$refs.autocomplete),
-                {types: ['geocode']}
-            );
-        }
+            VueGoogleMaps.PlaceInput()
+            var autocomplete = VueGoogleMaps.Autocomplete.constructor((this.$refs.autocomplete),
+                {types: ['geocode']});
+          //  VueGoogleMaps.Autocomplete(()
+    }
     }
 </script>
 

@@ -37,6 +37,6 @@ export function findUserEmail(email) {
 }
 
 export function  login(name_loc,pass_loc) {
-  axios.post('/api/login',{name:name_loc, pass:pass_loc});
+  axios.post('/api/login',{},{params:{username:name_loc,password:pass_loc}});
 
 }

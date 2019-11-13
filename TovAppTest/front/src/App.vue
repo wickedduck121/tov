@@ -4,7 +4,7 @@
     <product-info />
     </div>
     <Login />
-
+    <Map />
   </div>
 
 
@@ -18,12 +18,11 @@ import GoogleAuth from "./GoogleAuth";
 import Register from "./Register/Register";
 import Login from "./Login"
 import Map from "./Map"
-import GooglePlaces from "./googlePlaces"
 import Reg from './Registration.vue';
 import Vue from 'vue';
 export default {
   name: 'app',
-    components: {Register, GoogleAuth, ProductInfo, TestModule, Login, Map,GooglePlaces},
+    components: {Register, GoogleAuth, ProductInfo, TestModule, Login, Map},
     data () {
     return {
       msg: 'Welcome to Your Vue.js App',

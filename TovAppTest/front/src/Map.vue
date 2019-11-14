@@ -6,7 +6,8 @@
         <gmap-autocomplete v-bind:types="tps"  style="width: 50%" v-bind:componentRestrictions="cr"
           @place_changed="setPlace">
         </gmap-autocomplete>
-        <button @click="addMarker">Add</button>
+        <button @click="addMarker">Add marker</button>
+        <button @click="getShop">Register shop</button>
       </label>
       <br/>
 
@@ -26,8 +27,9 @@
 </template>
 
 <script>
+    import {findUserName, addShop} from './api.js';
     import {gmapApi} from 'vue2-google-maps';
-    import geoCoder from 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE'
+    //import geoCoder from 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE'
 
     export default {
         computed: {
@@ -37,6 +39,7 @@
 
         data() {
             return {
+                user: 0,
                 cr:{
                     country:'de'
                 },
@@ -64,9 +67,22 @@
             }
         },
         mounted(){
-            this.geolocate();
+           // this.geolocate();
+         var name = this.$cookies.get('username');
+        findUserName(name).then(result=>{this.user=result.data.id});
+            console.log(this.$cookies.keys());
+
+            console.log(this.user);
         },
         methods:{
+            getShop(){
+                if (this.currentPlace) {
+                    var name = this.$cookies.get('username');
+                    console.log("username: "+name);
+                    findUserName(name).then(result=>{addShop(this.currentPlace.name, result.data.name)});
+
+                }
+            },
             setPlace(place) {
                 this.currentPlace = place;
             },
@@ -83,7 +99,7 @@
                     this.jn=marker;
                 }
             },
-            geolocate: function() {
+         /*   geolocate: function() {
                 let geocoder = new geoCoder.GeoCoder();
                 navigator.geolocation.getCurrentPosition(position => {
                     geocoder.geocode({'latLng':{latitude: position.coords.latitude, longitude: position.coords.longitude}},function(results, status) {
@@ -123,7 +139,7 @@
                     this.infoOpened = true;
                     this.infoCurrentKey = key
                 }
-            }
+            }*/
         }
     }
 </script>

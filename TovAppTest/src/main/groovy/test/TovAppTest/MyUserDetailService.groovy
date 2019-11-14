@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import test.TovAppTest.rep.UserRepository
 
+
 @Service
 class MyUserDetailService implements UserDetailsService {
 
@@ -17,9 +18,12 @@ class MyUserDetailService implements UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String name){
 
-        repo
+        /*repo
                 .findByName(name)
                 .map { new User(it.name, it.pass, []) }
-                .orElseThrow { throw new UsernameNotFoundException() }
+                .orElseThrow { throw new UsernameNotFoundException() }*/
+        def user = repo.findByName()
+        user cast User
+
     }
 }

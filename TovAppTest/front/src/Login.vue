@@ -25,6 +25,7 @@
         methods:{
             sendlogin(nick_local,pass_local){
             login(nick_local,pass_local);
+            this.$cookies.set('username', nick_local);
             }
         }
     }

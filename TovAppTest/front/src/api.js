@@ -40,3 +40,9 @@ export function  login(name_loc,pass_loc) {
   axios.post('/api/login',{},{params:{username:name_loc,password:pass_loc}});
 
 }
+
+export function addShop(name_loc,name_user){
+  console.log("loc name: "+name_loc+" username: "+name_user);
+  axios.post('/api/shops/'+name_user,{name:name_loc});
+  axios.put('/api/user/updateshop/'+name_user,{name:name_loc})
+}

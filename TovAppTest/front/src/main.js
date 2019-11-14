@@ -6,7 +6,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import GoogleAuth from 'vue-google-oauth'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import VueCookies from 'vue-cookies'
 
+Vue.use(VueCookies);
+
+VueCookies.config('7d')
+VueCookies.set('theme','default');
+VueCookies.set('hover-time','1s');
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -14,6 +20,7 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places,drawing,geocoder'
   },
 });
+
 
 Vue.use(ElementUi);
 Vue.use(GoogleAuth, { client_id: '119838100754-v0klbsjrnas8efa4gqkjds4soa1t5t41.apps.googleusercontent.com' });

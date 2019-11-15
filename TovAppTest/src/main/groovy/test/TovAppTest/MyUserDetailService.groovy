@@ -22,8 +22,9 @@ class MyUserDetailService implements UserDetailsService {
                 .findByName(name)
                 .map { new User(it.name, it.pass, []) }
                 .orElseThrow { throw new UsernameNotFoundException() }*/
-        def user = repo.findByName()
-        user cast User
+        def user = repo.findByName(name)
+        User user1 = new User(user.name,user.pass, [])
+        user1
 
     }
 }

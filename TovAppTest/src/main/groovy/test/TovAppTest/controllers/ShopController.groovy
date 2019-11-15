@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import test.TovAppTest.Services.ShoptoUserService
+import test.TovAppTest.Services.RepositoryService
 import test.TovAppTest.entities.Shop
 import test.TovAppTest.entities.User
 import test.TovAppTest.rep.ShopRepository
@@ -25,7 +25,7 @@ class ShopController {
         repo=rp;
     }
     @Autowired
-    ShoptoUserService stus
+    RepositoryService stus
 
 @GetMapping
     List<Shop> list(){
@@ -56,6 +56,12 @@ class ShopController {
         User usr = stus.getUser(user_name)
         shop.setUser(usr)
         shop
+    }
+    @GetMapping('/usershops/{name}')
+    List<Shop> getShops(@PathVariable('name') String username )
+    {
+        User user = stus.getUser(username)
+        repo.findByUser(user)
     }
 
 

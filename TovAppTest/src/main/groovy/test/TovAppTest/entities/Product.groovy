@@ -15,7 +15,7 @@ class Product {
 
     String name
 
-    BigDecimal price
+    //BigDecimal price
 }
 
 //@Entity

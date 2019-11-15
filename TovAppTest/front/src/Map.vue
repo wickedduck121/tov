@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {findUserName, addShop} from './api.js';
+    import {findUserName, addShop, getShopsByUsername} from './api.js';
     import {gmapApi} from 'vue2-google-maps';
     //import geoCoder from 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDrPipaoGhlL4m1IlkX6BQTDbgYIJKuJGE'
 
@@ -67,9 +67,21 @@
             }
         },
         mounted(){
+            var username = this.$cookies.get('username');
+            getShopsByUsername(username).then(result => {
+                console.log(result.data);
+            result.data.forEach(el=>{
+                const marker = {
+                    lat: el.lat,
+                    lng: el.lng
+                };
+                this.markers.push({ position: marker, full_name: el.name });
+            })
+            });
+
            // this.geolocate();
-         var name = this.$cookies.get('username');
-        findUserName(name).then(result=>{this.user=result.data.id});
+
+        findUserName(username).then(result=>{this.user=result.data.id});
             console.log(this.$cookies.keys());
 
             console.log(this.user);
@@ -77,9 +89,12 @@
         methods:{
             getShop(){
                 if (this.currentPlace) {
-                    var name = this.$cookies.get('username');
-                    console.log("username: "+name);
-                    findUserName(name).then(result=>{addShop(this.currentPlace.name, result.data.name)});
+                    var username = this.$cookies.get('username');
+                    console.log("username: "+username);
+                    findUserName(username).then(result=>{
+                        alert(username);
+                        addShop(this.currentPlace.name,this.currentPlace.geometry.location.lat(),this.currentPlace.geometry.location.lng(), username)
+                    });
 
                 }
             },
@@ -129,7 +144,7 @@
                 }
 
 
-            },
+            },*/
             toggleInfo: function(marker, key) {
                 this.infoPosition = marker.position;
                 this.infoContent = marker.full_name;
@@ -139,7 +154,7 @@
                     this.infoOpened = true;
                     this.infoCurrentKey = key
                 }
-            }*/
+            }
         }
     }
 </script>

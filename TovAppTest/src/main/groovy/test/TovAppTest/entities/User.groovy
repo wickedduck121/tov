@@ -38,7 +38,7 @@ class User {
     @NotEmpty
     String gender
 
-    @OneToMany(mappedBy = 'user', cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    Set<Shop> shops;
+    /*@OneToMany(mappedBy = 'user', cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<Shop> shops;*/
 
 }

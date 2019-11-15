@@ -13,7 +13,7 @@ import javax.persistence.OneToMany
 import javax.persistence.Table
 
 @Entity
-@Table(name='Shop')
+@Table
 class Shop {
 
     @Id
@@ -21,6 +21,10 @@ class Shop {
     long id
 
     String name
+
+    float lat
+
+    float lng
 
     @ManyToOne(fetch = FetchType.EAGER)
     User user

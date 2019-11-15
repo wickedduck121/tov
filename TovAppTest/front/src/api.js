@@ -41,8 +41,11 @@ export function  login(name_loc,pass_loc) {
 
 }
 
-export function addShop(name_loc,name_user){
+export function addShop(name_loc,lat_loc,lng_loc,name_user){
   console.log("loc name: "+name_loc+" username: "+name_user);
-  axios.post('/api/shops/'+name_user,{name:name_loc});
-  axios.put('/api/user/updateshop/'+name_user,{name:name_loc})
+  axios.post('/api/shops/'+name_user,{name:name_loc, lat:lat_loc, lng:lng_loc});
+}
+
+export function getShopsByUsername(username) {
+  return axios.get('/api/shops/usershops/'+username);
 }
